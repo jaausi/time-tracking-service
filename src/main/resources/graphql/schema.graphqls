@@ -1,0 +1,41 @@
+type Query {
+    allHours: [Hour]
+    allUsers: [User]
+}
+
+type Hour {
+    id: ID!
+    task: Task
+    topic: Topic
+    description: String
+    startTime: String
+    endTime: String
+    owner: User
+}
+
+type Task {
+    id: String!
+    project: String
+    hours: [Hour]
+}
+
+type Topic {
+    topic: String
+    hours: [Hour]
+}
+
+type User {
+    id: ID!
+    firstName: String
+    lastName: String
+    role: String
+    title: Title
+    email: String
+    hours: [Hour]
+}
+
+type Title {
+    id: ID!
+    name: String
+    description: String
+}
