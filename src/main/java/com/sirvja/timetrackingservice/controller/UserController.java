@@ -1,22 +1,27 @@
 package com.sirvja.timetrackingservice.controller;
 
-import com.sirvja.timetrackingservice.model.User;
-import com.sirvja.timetrackingservice.repository.OwnerRepository;
+import com.sirvja.timetrackingservice.model.TimeTrackingUser;
+import com.sirvja.timetrackingservice.repository.UserRepository;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
-    private final OwnerRepository ownerRepository;
+    private final UserRepository userRepository;
 
-    public UserController(OwnerRepository ownerRepository){
-        this.ownerRepository = ownerRepository;
+    public UserController(UserRepository userRepository){
+        this.userRepository = userRepository;
     }
 
     @QueryMapping
-    public List<User> allUsers(){
-        return ownerRepository.findAll();
+    public Iterable<TimeTrackingUser> allUsers(){
+        return userRepository.findAll().toIterable();
+    }
+
+    public Optional<TimeTrackingUser> userById(String id) {
+        return userRepository.findById(id).blockOptional();
     }
 }

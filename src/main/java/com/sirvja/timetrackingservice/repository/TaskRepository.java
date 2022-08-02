@@ -1,32 +1,14 @@
 package com.sirvja.timetrackingservice.repository;
 
-import com.sirvja.timetrackingservice.model.Role;
+import com.sirvja.timetrackingservice.model.Hour;
 import com.sirvja.timetrackingservice.model.Task;
-import com.sirvja.timetrackingservice.model.Title;
-import com.sirvja.timetrackingservice.model.User;
+import org.springframework.data.mongodb.repository.Tailable;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
+import reactor.core.publisher.Flux;
 
 @Repository
-public class TaskRepository {
-    private List<Task> tasks = new ArrayList<>();
-
-    public List<Task> findAll() {
-        return tasks;
-    }
-
-    public Task findById(String id) {
-        return tasks.stream()
-                .filter(task -> task.id() == id)
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-
-    @PostConstruct
-    private void init() {
-        tasks.add(new Task("VER-1", "Verkkokalvo"));
-    }
+public interface TaskRepository extends ReactiveCrudRepository<Task, String> {
+    @Tailable
+    Flux<Hour> findWithTailableCursorBy();
 }
