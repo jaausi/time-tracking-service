@@ -33,18 +33,19 @@ public class TimeTrackingUser extends User {
     @Builder.Default
     private boolean isAdmin = false;
 
-    public TimeTrackingUser(String username, String password, boolean isAdmin, String email, String firstName, String lastName, Role role) {
-        this(username, password, Collections.singleton(new SimpleGrantedAuthority(isAdmin ? Role.ADMIN.name() : Role.USER.name())), email, firstName, lastName, role);
+    public TimeTrackingUser(String username, String password, boolean isAdmin, String email, String firstName, String lastName, Title title) {
+        this(username, password, Collections.singleton(new SimpleGrantedAuthority(isAdmin ? Role.ADMIN.name() : Role.USER.name())), email, firstName, lastName, isAdmin ? Role.ADMIN : Role.USER, title);
         this.isAdmin = isAdmin;
     }
 
-    private TimeTrackingUser(String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName, Role role) {
+    private TimeTrackingUser(String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName, Role role, Title title) {
         super(username, password, true, true, true, true, authorities);
 
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
+        this.title = title;
         this.username = username;
     }
 

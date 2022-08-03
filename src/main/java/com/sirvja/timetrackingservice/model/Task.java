@@ -13,6 +13,7 @@ public record Task(@Id String id, @NonNull String project) {
                 switch (id.split("-")[0]){
                     case "ver" -> "verkkokalvo";
                     case "vi" -> "vaikeatihosairaudet";
+                    default -> "no project";
                 }
         );
     }

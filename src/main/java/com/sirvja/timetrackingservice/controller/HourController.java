@@ -34,8 +34,8 @@ public class HourController {
     public Optional<Hour> newHour(String taskId, String topicString, String description, String startTime, String endTime, String userId) {
         Task task = taskRepository.findById(taskId).blockOptional()
                 .orElse(
-                        taskRepository.save(
-                                new Task(taskId)).blockOptional()
+                        taskRepository.save(new Task(taskId))
+                                .blockOptional()
                                 .orElseThrow(() -> new IllegalArgumentException(String.format("Couldn't create new object with param: %s", taskId)))
                 );
 
